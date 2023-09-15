@@ -7,7 +7,6 @@
 # ---- Dimensions of 2D Array ---------
 # numrows = len(input)
 # numcols = len(input[0])
-# 
 
 
 #          -------------Columns-------------
@@ -64,9 +63,15 @@ class Board:
         
         return False
     
-    # Returns if a move is valid by checking if the first row of the specified column is occupied
+    # Returns if a move is valid by checking if the first row of the specified column (x) is occupied
     def isValid(self, x):
         return self.boardState[0][x] == 0
+    
+
+    # Gets a new board given a player and their action 
+    def getNewBoard(self, x, playerId):
+        newBoardState = self.getBoardState()
+        
 
 
 
