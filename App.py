@@ -1,4 +1,3 @@
-import Board
 
 class App:
 
@@ -11,6 +10,7 @@ class App:
         players = self.getPlayers(gameN)
 
         game = Game(gameN, boardWidth, boardHeight, players)
+        game.startGame()
 
 
     def getPlayers(gameN):

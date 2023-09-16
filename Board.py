@@ -14,34 +14,34 @@
 #----Row 0   |   |   |   |   |   |   |   |
 #----Row 1   |   |   |   |   |   |   |   |
 #----Row 2   |   |   |   |   |   |   |   |
-#----Row 3   |   | o |   | x |   |   |   |
-#----Row 4   |   | o |   | x |   |   |   |
-#----Row 5   |   | o | 0 | x |   |   |   |
+#----Row 3   |   | O |   | X |   |   |   |
+#----Row 4   |   | O |   | X |   |   |   |
+#----Row 5   |   | O | O | X |   |   |   |
 
 
 class Board:
     
-    width = 0
-    height = 0
-    boardState = [[]] # 2D integer array cntaining 0's, or else playerId's in case a spot has been claimed 
+    rows = 0
+    columns = 0
+    boardState = 0 # 2D integer array cntaining 0's, or else playerId's in case a spot has been claimed 
 
 
     # Constructor for new empty board
-    def __init__(self, width, height):
-        self.width = width
-        self.height = height
-        self.boardState = [self.width][self.height]
+    def __init__(self, rows, columns):
+        self.rows = rows
+        self.columns = columns
+        self.boardState = [[0]*columns]*rows
 
     # Method for cloning a board based on another board class
     def makeBoardFromBoard(self, board):
-        self.height = board.height
-        self.width = board.width
+        self.rows = board.rows
+        self.columns = board.columns
         self.boardState = board
 
     # Constructor for cloning a board using a boardstate
     def makeBoardFromState(self, state):
-        self.height = len(state)
-        self.width = len(state[0])
+        self.rows = len(state)
+        self.columns = len(state[0])
         self.boardState = state
 
     # Get the value of a certain coordinate on the board
@@ -55,7 +55,7 @@ class Board:
 
     # let player PlayerId make a move in column x
     def play(self, col, playerId):
-        # Iterate through each row
+        # Iterate through each row in reverse order
         for row, value in reversed(list(enumerate(self.boardState))):
             if(self.boardState[row][col] == 0):
                 self.boardState[row][col] = playerId
@@ -69,11 +69,42 @@ class Board:
     
 
     # Gets a new board given a player and their action 
-    def getNewBoard(self, x, playerId):
+    def getNewBoard(self, col, playerId):
         newBoardState = self.getBoardState()
+        # Iterate through each row in reverse order
+        for row, value in reversed(list(enumerate(self.boardState))):
+            if(newBoardState[row][col] == 0):
+                newBoardState[row][col] = playerId
+                return self.makeBoardFromState(newBoardState)
         
+        return newBoardState
 
 
+    def __str__(self):
+        divider = " "
+        divider2 = " "
+        numberColumn = "|"
+
+        for index, value in enumerate(self.boardState[0]):
+            divider += "--- "
+            divider2 += "=== "
+            numberColumn += " " + str(index+1) + " |"
+
+        output = ""
+
+        for row, value in enumerate(self.boardState):
+            output += "\n" + divider + "\n"
+            for column, value in enumerate(self.boardState[0]):
+                node = " "
+                if(self.boardState[row][column] == 1):
+                    node = "X"
+                elif(self.boardState[row][column] == 2):
+                    node = "O"
+                output += "| " + node + " "
+            output += "|"
+
+        output += "\n" + divider2 + "\n" + numberColumn + "\n"
+        return output
 
 
     
