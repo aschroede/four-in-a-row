@@ -6,6 +6,8 @@ Created on Thu Sep 14 15:45:02 2023
 @author: kateryna
 """
 
+from PlayerController import PlayerController
+
 class MinMaxPlayer(PlayerController):
     depth = 0
     def __init__(self, playerID, depth, gameN, heuristic):
@@ -15,7 +17,7 @@ class MinMaxPlayer(PlayerController):
         self.heuristic = heuristic
         
     def makeMove(self, board): 
-        maxValue = minValue #??
+        maxValue = float('-inf')
         maxMove = 0
         for i in range(board.width):
             if board.isValid(i): 
