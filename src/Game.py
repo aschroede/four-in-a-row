@@ -22,9 +22,9 @@ class Game:
         print("Start game!")
         currentPlayer = 0
 
-        while (not(self.isOver)):
+        while (not(self.isOver())):
             # turn player can make a move
-            self.gameBoard.play(self.players[currentPlayer].makeMove(self.gameBoard), self.players[currentPlayer].playerId)
+            self.gameBoard.play(self.players[currentPlayer].makeMove(self.gameBoard), self.players[currentPlayer].playerID)
 
             # other player gets to make a move
             currentPlayer = 1 if currentPlayer == 0 else 0
@@ -33,9 +33,9 @@ class Game:
         if(self.winner < 0):
             print("Game is a draw!")
         else:
-            print("Player " + self.players[self.winner -1] + " won!")
-        print("Player " + self.players[0] + " evaluated a boardsate " + self.players[0].getEvalCount() + " times.")
-        print("Player " + self.players[1] + " evaluated a boardsate " + self.players[1].getEvalCount() + " times.")
+            print("Player " + str(self.players[self.winner -1]) + " won!")
+        #print("Player " + str(self.players[0]) + " evaluated a boardsate " + self.players[0].getEvalCount() + " times.")
+        #print("Player " + str(self.players[1]) + " evaluated a boardsate " + self.players[1].getEvalCount() + " times.")
         return self.winner
     
     # Determine if the game is over
@@ -45,12 +45,12 @@ class Game:
     
 
     @staticmethod
-    def winning (self, board, gameN):
+    def winning (board, gameN):
         player = 0
 
-        # Vertical Check 
+        # Horizontal Check 
         for row in range (len(board)):
-            for column in range (len(board[row]) - gameN):
+            for column in range (len(board[row]) - (gameN-1)):
                 if(board[row][column] != 0):
                     player = board[row][column]
                     for x in range(gameN):
@@ -61,8 +61,9 @@ class Game:
                         return player
                     
 
-        # Horizontal Check 
-        for row in range (len(board) - gameN):
+        
+        # Vertical Check 
+        for row in range (len(board) - (gameN-1)):
             for column in range (len(board[row])):
                 if(board[row][column] != 0):
                     player = board[row][column]
@@ -75,8 +76,8 @@ class Game:
                     
 
         # Ascending Diagonal Check 
-        for row in reversed(range(len(board) - gameN)):
-            for column in range(len(board[0] - gameN)):
+        for row in range(len(board)-1, gameN-2, -1):
+            for column in range(len(board[0]) - (gameN-1)):
                 if(board[row][column] != 0):
                     player = board[row][column]
                     for x in range(gameN):
@@ -87,8 +88,8 @@ class Game:
                         return player
                     
         # Descending Diagonal Check
-        for row in (range(len(board) - gameN)):
-            for column in range(len(board[0] - gameN)):
+        for row in (range(len(board) - (gameN-1))):
+            for column in range(len(board[0]) - (gameN-1)):
                 if(board[row][column] != 0):
                     player = board[row][column]
                     for x in range(gameN):

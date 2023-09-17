@@ -24,7 +24,7 @@ class HumanPlayer(PlayerController.PlayerController):
         if self.heuristic != None:
             print(f"Heuristic: {self.heuristic} calculated the best move is: {self.heuristic.getBestSction(self.playerID, board)+1}")        
         
-        column = int(input("Player " + self + "\nWhich column would you like to play in?"))
+        column = int(input("Player " + str(self) + "\nWhich column would you like to play in? "))
         
         print(f"Selected Column: {column}")
         

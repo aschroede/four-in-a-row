@@ -13,12 +13,12 @@ class App:
         players = []
         players = self.getPlayers(gameN)
 
-        game = Game(gameN, rows, columns, players)
+        game = Game(gameN, rows, columns, players)                  
         game.startGame()
 
     def startGame(self):
          self.startGame()
-
+                                        
     def getPlayers(self,gameN):
             #heuristic1 = SimpleHeuristic(gameN)
             #heuristic2 = SimpleHeuristic(gameN)
@@ -37,4 +37,3 @@ class App:
     
 
 app = App()
-app.startGame()

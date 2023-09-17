@@ -18,6 +18,7 @@
 #----Row 4   |   | O |   | X |   |   |   |
 #----Row 5   |   | O | O | X |   |   |   |
 
+from copy import deepcopy
 
 class Board:
     
@@ -30,7 +31,7 @@ class Board:
     def __init__(self, rows, columns):
         self.rows = rows
         self.columns = columns
-        self.boardState = [[0]*columns]*rows
+        self.boardState = [[0 for i in range(columns)] for j in range(rows)]
 
     # Method for cloning a board based on another board class
     def makeBoardFromBoard(self, board):
@@ -50,8 +51,7 @@ class Board:
     
     # Get cloned int array of the board state
     def getBoardState(self):
-        raise NotImplementedError
-        #TODO
+        return deepcopy(self.boardState)
 
     # let player PlayerId make a move in column x
     def play(self, col, playerId):
