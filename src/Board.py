@@ -28,22 +28,26 @@ class Board:
 
 
     # Constructor for new empty board
-    def __init__(self, rows, columns):
-        self.rows = rows
-        self.columns = columns
-        self.boardState = [[0 for i in range(columns)] for j in range(rows)]
+    def __init__(self, *args):
 
-    # Method for cloning a board based on another board class
-    def makeBoardFromBoard(self, board):
-        self.rows = board.rows
-        self.columns = board.columns
-        self.boardState = board
+        # Default constructor
+        if len(args) == 2:
+            self.rows = args[0]
+            self.columns = args[1]
+            self.boardState = [[0 for i in range(self.columns)] for j in range(self.rows)]
 
-    # Constructor for cloning a board using a boardstate
-    def makeBoardFromState(self, state):
-        self.rows = len(state)
-        self.columns = len(state[0])
-        self.boardState = state
+        else:
+            # Make Board from Board
+            if(isinstance(args[0], Board)):
+                self.rows = args[0].rows
+                self.columns = args[0].columns
+                self.boardState = args[0]
+            
+            # Make Board from State
+            elif(isinstance(args[0], list)):
+                self.rows = len(args[0])
+                self.columns = len(args[0][0])
+                self.boardState = args[0]
 
     # Get the value of a certain coordinate on the board
     def getValue(self, x, y):
@@ -75,9 +79,9 @@ class Board:
         for row, value in reversed(list(enumerate(self.boardState))):
             if(newBoardState[row][col] == 0):
                 newBoardState[row][col] = playerId
-                return self.makeBoardFromState(newBoardState)
+                return Board(newBoardState)
         
-        return newBoardState
+        return  Board(newBoardState)
 
 
     def __str__(self):

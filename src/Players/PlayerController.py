@@ -5,8 +5,6 @@ Created on Thu Sep 14 16:14:58 2023
 
 @author: kateryna
 """
-from Board import Board
-from Heuristic import Heuristic
 from abc import ABC, abstractmethod
 
 # Abstract class defining Player
