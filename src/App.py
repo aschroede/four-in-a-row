@@ -24,6 +24,7 @@ class App:
             #heuristic2 = SimpleHeuristic(gameN)
 
             # This is a test
+            # asdfa
 
             human1 = HumanPlayer.HumanPlayer(1, gameN, None)
             human2 = HumanPlayer.HumanPlayer(2, gameN, None)
