@@ -7,6 +7,8 @@ Created on Thu Sep 14 13:58:10 2023
 """
 
 from PlayerController import PlayerController
+from Board import Board
+from Heuristic import Heuristic
 
 
 class HumanPlayer(PlayerController):
