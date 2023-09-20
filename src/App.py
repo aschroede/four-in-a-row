@@ -1,4 +1,4 @@
-from Players import HumanPlayer
+from Players import HumanPlayer, MinMaxPlayer
 from Game import Game
 from Heuristics import SimpleHeuristic
 
@@ -24,20 +24,15 @@ class App:
             heuristic1 = SimpleHeuristic.SimpleHeuristic(gameN)
             heuristic2 = SimpleHeuristic.SimpleHeuristic(gameN)
 
-            # This is a test
-            #This is another test
-
             human1 = HumanPlayer.HumanPlayer(1, gameN, heuristic1)
-            human2 = HumanPlayer.HumanPlayer(2, gameN, heuristic2)
+            #player2 = MinMaxPlayer.MinMaxPlayer(2, 4, gameN, heuristic2)
+            player2 = HumanPlayer.HumanPlayer(2, gameN, heuristic2)
 
             #TODO: Implment other PlayerControllers (MinMax, AlphaBeta)
 
-
             players = []
             players.append(human1)
-            players.append(human2)
+            players.append(player2)
             return players
     
-    
-
 app = App()
