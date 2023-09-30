@@ -1,6 +1,9 @@
 from Board import Board
 import sys
 from abc import ABC, abstractmethod
+
+#### THIS IS NOT WORKING AND IS NOT USED ####
+
 class AHeuristicBase(ABC):
     
     evalCount = 0
