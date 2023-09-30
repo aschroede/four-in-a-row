@@ -24,7 +24,12 @@ class Game:
 
         while (not(self.isOver())):
             # turn player can make a move
-            self.gameBoard.play(self.players[currentPlayer].makeMove(self.gameBoard), self.players[currentPlayer].playerID)
+
+            
+            valid_play = self.gameBoard.play(self.players[currentPlayer].makeMove(self.gameBoard), self.players[currentPlayer].playerID)
+            if not valid_play:
+                print("Invalid move, please select a different column to play in.")
+                continue
 
             # other player gets to make a move
             currentPlayer = 1 if currentPlayer == 0 else 0
@@ -34,8 +39,8 @@ class Game:
             print("Game is a draw!")
         else:
             print("Player " + str(self.players[self.winner -1]) + " won!")
-        #print("Player " + str(self.players[0]) + " evaluated a boardsate " + self.players[0].getEvalCount() + " times.")
-        #print("Player " + str(self.players[1]) + " evaluated a boardsate " + self.players[1].getEvalCount() + " times.")
+        print("Player " + str(self.players[0]) + " evaluated a boardsate " + str(self.players[0].getEvalCount()) + " times.")
+        print("Player " + str(self.players[1]) + " evaluated a boardsate " + str(self.players[1].getEvalCount()) + " times.")
         return self.winner
     
     # Determine if the game is over

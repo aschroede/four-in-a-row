@@ -1,6 +1,6 @@
-from Players import HumanPlayer, MinMaxPlayer
+from Players import HumanPlayer, MinMaxPlayerPruning, MinMaxPlayer
 from Game import Game
-from Heuristics import SimpleHeuristic
+from Heuristics import SimpleHeuristic, AdvancedHeuristic
 
 class App:
 
@@ -23,16 +23,19 @@ class App:
     def getPlayers(self,gameN):
             heuristic1 = SimpleHeuristic.SimpleHeuristic(gameN)
             heuristic2 = SimpleHeuristic.SimpleHeuristic(gameN)
+            heuristic3 = AdvancedHeuristic.AdvancedHeuristic(gameN)
+            heuristic4 = AdvancedHeuristic.AdvancedHeuristic(gameN)
 
             human1 = HumanPlayer.HumanPlayer(1, gameN, heuristic1)
-            #player2 = MinMaxPlayer.MinMaxPlayer(2, 4, gameN, heuristic2)
-            player2 = HumanPlayer.HumanPlayer(2, gameN, heuristic2)
+            player2 = HumanPlayer.HumanPlayer(2, gameN, heuristic4)
+            pruning = MinMaxPlayerPruning.MinMaxPlayerPruning(2, 5, gameN, heuristic2)
+            nopruning = MinMaxPlayer.MinMaxPlayer(2, 5, gameN, heuristic2)
 
             #TODO: Implment other PlayerControllers (MinMax, AlphaBeta)
 
             players = []
             players.append(human1)
-            players.append(player2)
+            players.append(pruning)
             return players
     
 app = App()

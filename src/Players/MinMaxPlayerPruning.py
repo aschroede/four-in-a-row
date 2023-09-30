@@ -11,7 +11,7 @@ from . import Node
 import sys
 from Game import Game
 
-class MinMaxPlayer(PlayerController.PlayerController):
+class MinMaxPlayerPruning(PlayerController.PlayerController):
     depth = 0
     def __init__(self, playerID, depth, gameN, heuristic):
         self.playerID = playerID
@@ -46,7 +46,7 @@ class MinMaxPlayer(PlayerController.PlayerController):
         maxMove = 0
 
         startNode = Node.Node(board)
-        self.minMax(startNode, self.depth, self.playerID)
+        self.minMax(startNode, self.depth, -sys.maxsize, sys.maxsize, self.playerID)
         
         for child in startNode.children:
             if child.value > maxValue:
@@ -59,7 +59,7 @@ class MinMaxPlayer(PlayerController.PlayerController):
     # Node is a class with a boardState, a variable for storing the static evaluation of the boardstate,
     # a single parent node, and child nodes, as well as the associated column that leads to this boardstate
     # If player is true we are the maximiser, if false we are the minimizer
-    def minMax(self, node, depth, player):
+    def minMax(self, node, depth, alpha, beta, player):
             
             # Base cases to bottom out the recursion. 
 
@@ -78,21 +78,27 @@ class MinMaxPlayer(PlayerController.PlayerController):
                 else:
                      node.value = -sys.maxsize
                 return node.value
-            
-            # Generate child nodes of this node
-            for i in range(node.board.columns):
-                if node.board.isValid(i):
-                    new_Node = Node.Node(node.board.getNewBoard(i, player))
-                    new_Node.column = i
-                    node.addChild(new_Node)
-            
+
             # Perform minimax on nodes
             if(player == self.playerID): # We are the maximiser
                 currentMax = -sys.maxsize
 
-                for child in node.children:
-                    evalResult = self.minMax(child, depth-1, 1 if player==2 else 2)   # Recursion step
-                    currentMax = max(currentMax, evalResult)
+                for i in range (node.board.columns):
+                    if node.board.isValid(i):
+
+                        # Generate children nodes for valid moves
+                        child = Node.Node(node.board.getNewBoard(i, player))
+                        child.column = i
+                        node.addChild(child)
+
+                        # Perform minMax on child nodes
+                        evalResult = self.minMax(child, depth-1, alpha, beta, 1 if player==2 else 2)
+                        currentMax  = max(currentMax, evalResult)    # Recursion step
+
+                        # Perforam alpha/beta pruning
+                        alpha = max(alpha, currentMax)
+                        if beta < alpha:
+                            break
                 
                 node.value = currentMax
                 return currentMax
@@ -100,9 +106,22 @@ class MinMaxPlayer(PlayerController.PlayerController):
             else: # We are the minimizer
                 currentMin = sys.maxsize
 
-                for child in node.children:
-                    evalResult = self.minMax(child, depth-1, 1 if player==2 else 2)    # Recursion step
-                    currentMin = min(currentMin, evalResult)
+                for i in range (node.board.columns):
+                    if node.board.isValid(i):
+
+                        # Generate children nodes for valid moves
+                        child = Node.Node(node.board.getNewBoard(i, player))
+                        child.column = i
+                        node.addChild(child)
+
+                        # Perform minMax on child nodes
+                        evalResult = self.minMax(child, depth-1, alpha, beta, 1 if player==2 else 2)
+                        currentMin = min(currentMin, evalResult)     # Recursion step
+                        
+                        # Perforam alpha/beta pruning
+                        beta = min(beta, currentMin)
+                        if beta < alpha:
+                            break
                 
                 node.value = currentMin
                 return currentMin

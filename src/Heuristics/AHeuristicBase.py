@@ -1,7 +1,7 @@
 from Board import Board
 import sys
 from abc import ABC, abstractmethod
-class Heuristic(ABC):
+class AHeuristicBase(ABC):
     
     evalCount = 0
     
@@ -14,12 +14,25 @@ class Heuristic(ABC):
          
    #determines best column for the next move 
     def getBestAction(self, player, board):
-        utilities = self.evalActions(player, board)
-        print(utilities)
+        myUtilities = self.evalActions(player, board)
+        enemyUtilities = self.evalActions(1 if player==2 else 2, board)
         bestAction = 0
-        for i in range(len(utilities)):
-            if utilities[i] > utilities[bestAction]:
+        
+        # Check for winning moves on our side
+        for i in range(len(myUtilities)):
+            if(myUtilities[i] == sys.maxsize):
+                return i
+
+        # Check for winning moves on enemy side and deny them
+        for i in range(len(myUtilities)):
+            if(enemyUtilities[i] == sys.maxsize):
+                return i
+        
+        # If no winning moves just get best utility
+        for i in range(len(myUtilities)):
+            if myUtilities[i] > myUtilities[bestAction]:
                 bestAction = i
+        
         return bestAction
     
     #helper function that determines utility for each column    
