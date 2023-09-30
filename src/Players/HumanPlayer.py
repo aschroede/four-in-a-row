@@ -1,11 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Thu Sep 14 13:58:10 2023
-
-@author: kateryna
-"""
-
 from . import PlayerController
 
 class HumanPlayer(PlayerController.PlayerController):
@@ -17,9 +9,6 @@ class HumanPlayer(PlayerController.PlayerController):
         self.playerID = playerID
         self.gameN = gameN
         self.heuristic = heuristic
-        # super().__init__(playerID, gameN, heuristic)
-        # super().__init__(gameN)
-        # super().__init__(heuristic)
     
     # Show the human player the current board and ask them for the next move       
     def makeMove(self, board):

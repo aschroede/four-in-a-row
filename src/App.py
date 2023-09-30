@@ -4,38 +4,76 @@ from Heuristics import SimpleHeuristic, AdvancedHeuristic
 
 class App:
 
-    game = 0
-
+    # Constructor
     def __init__(self) -> None:
-        gameN = 4
-        rows = 6
-        columns = 7
+        self.gameN = 4
+        self.rows = 6
+        self.columns = 7
+        self.players = []
+                          
+    def getGame(self):
+        return Game(self.gameN, self.rows, self.columns, self.players)
 
-        players = []
-        players = self.getPlayers(gameN)
+    # Asks the user for the number of rows, columns, and gameN
+    def getBoardSettings(self):
+         
+        default = input("Do you want to use the default board size (6x7) [yes/no]? ")
 
-        game = Game(gameN, rows, columns, players)                  
+        if(default != "yes"):
+            
+            # Get rows
+            self.rows = int(input("How many rows? "))
+
+            # Get columns
+            while(True):
+                self.columns = int(input("How many columns? (Must be odd) "))
+
+                if self.columns % 2 == 0:
+                    print("Invalid - column count is even.")
+                else:
+                    break
+        
+            # Get gameN
+            self.gameN = int(input("How many pieces in a row is a win? "))
+
+    def getPlayers(self):
+            
+            heuristic1 = SimpleHeuristic.SimpleHeuristic(self.gameN)
+            heuristic2 = SimpleHeuristic.SimpleHeuristic(self.gameN)
+            players = []
+
+            # First player
+            human = HumanPlayer.HumanPlayer(1, self.gameN, heuristic1)
+            players.append(human)
+
+            # Second player
+            opponent = int(input("Who would you like to play against: Human[1] or Computer[2]? "))
+
+            if(opponent==1):
+                 
+                human = HumanPlayer.HumanPlayer(2, self.gameN, heuristic2)
+                players.append(human)
+
+            elif(opponent==2):
+                 
+                depth = int(input("What depth should the computer go to? "))
+                 
+                alphabeta = input("Should the computer use alpha beta pruning? [yes/no] ")
+                if(alphabeta=="yes"):
+                    computer = MinMaxPlayerPruning.MinMaxPlayerPruning(2, depth, self.gameN, heuristic2)
+                elif(alphabeta=="no"):
+                    computer = MinMaxPlayer.MinMaxPlayer(2, depth, self.gameN, heuristic2)
+
+                players.append(computer)
+           
+            self.players = players
+
+    def start(self):
+        self.getBoardSettings()
+        self.getPlayers()
+        game = self.getGame()
         game.startGame()
 
-    def startGame(self):
-         self.startGame()
-                                        
-    def getPlayers(self,gameN):
-            heuristic1 = SimpleHeuristic.SimpleHeuristic(gameN)
-            heuristic2 = SimpleHeuristic.SimpleHeuristic(gameN)
-            heuristic3 = AdvancedHeuristic.AdvancedHeuristic(gameN)
-            heuristic4 = AdvancedHeuristic.AdvancedHeuristic(gameN)
-
-            human1 = HumanPlayer.HumanPlayer(1, gameN, heuristic1)
-            player2 = HumanPlayer.HumanPlayer(2, gameN, heuristic4)
-            pruning = MinMaxPlayerPruning.MinMaxPlayerPruning(2, 5, gameN, heuristic2)
-            nopruning = MinMaxPlayer.MinMaxPlayer(2, 5, gameN, heuristic2)
-
-            #TODO: Implment other PlayerControllers (MinMax, AlphaBeta)
-
-            players = []
-            players.append(human1)
-            players.append(pruning)
-            return players
     
 app = App()
+app.start()

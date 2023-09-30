@@ -5,7 +5,6 @@ import sys
 class SimpleHeuristic(Heuristic.Heuristic):
     def __init__(self, gameN):
         self.gameN = gameN
-        #super().__init__(gameN)
         
     def name(self):
         return "Simple"

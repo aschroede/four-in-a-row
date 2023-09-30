@@ -1,32 +1,8 @@
 
-# ---- Indexing a 2D Array ------------
-# input = ([[1, 2], [3, 4], [5, 6]])
-# input[0][1] = 2
-# First number is for the row, second number is for the column. This is the same as in Java
-
-# ---- Dimensions of 2D Array ---------
-# numrows = len(input)
-# numcols = len(input[0])
-
-
-#          -------------Columns-------------
-#              1   2   3   4   5   6   7  
-#----Row 0   |   |   |   |   |   |   |   |
-#----Row 1   |   |   |   |   |   |   |   |
-#----Row 2   |   |   |   |   |   |   |   |
-#----Row 3   |   | O |   | X |   |   |   |
-#----Row 4   |   | O |   | X |   |   |   |
-#----Row 5   |   | O | O | X |   |   |   |
-
 from copy import deepcopy
 
 class Board:
     
-    rows = 0
-    columns = 0
-    boardState = 0 # 2D integer array cntaining 0's, or else playerId's in case a spot has been claimed 
-
-
     # Constructor for new empty board
     def __init__(self, *args):
 
@@ -70,7 +46,6 @@ class Board:
     # Returns if a move is valid by checking if the first row of the specified column (x) is occupied
     def isValid(self, x):
         return self.boardState[0][x] == 0
-    
 
     # Gets a new board given a player and their action 
     def getNewBoard(self, col, playerId):
@@ -82,7 +57,6 @@ class Board:
                 return Board(newBoardState)
         
         return  Board(newBoardState)
-
 
     def __str__(self):
         divider = " "

@@ -1,10 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Thu Sep 14 16:14:58 2023
-
-@author: kateryna
-"""
 from abc import ABC, abstractmethod
 
 # Abstract class defining Player

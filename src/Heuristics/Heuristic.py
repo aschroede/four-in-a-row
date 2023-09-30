@@ -15,7 +15,6 @@ class Heuristic(ABC):
    #determines best column for the next move 
     def getBestAction(self, player, board):
         utilities = self.evalActions(player, board)
-        print(utilities)
         bestAction = 0
         for i in range(len(utilities)):
             if utilities[i] > utilities[bestAction]:

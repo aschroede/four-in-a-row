@@ -1,4 +1,3 @@
-import Players.PlayerController
 from Board import Board
 
 class Game:
@@ -6,7 +5,6 @@ class Game:
     players = 0
     gameBoard = 0 
     winner = 0
-
 
     # Create a new game
     # gameN - N in a row required to win
@@ -16,7 +14,6 @@ class Game:
         self.players = players
         self.gameBoard = Board(rows, columns)
 
-    
     # Start game
     def startGame(self):
         print("Start game!")
@@ -24,8 +21,6 @@ class Game:
 
         while (not(self.isOver())):
             # turn player can make a move
-
-            
             valid_play = self.gameBoard.play(self.players[currentPlayer].makeMove(self.gameBoard), self.players[currentPlayer].playerID)
             if not valid_play:
                 print("Invalid move, please select a different column to play in.")
@@ -35,19 +30,21 @@ class Game:
             currentPlayer = 1 if currentPlayer == 0 else 0
         
         print(self.gameBoard)
+
+        # Check if anyone has won the game
         if(self.winner < 0):
             print("Game is a draw!")
         else:
             print("Player " + str(self.players[self.winner -1]) + " won!")
         print("Player " + str(self.players[0]) + " evaluated a boardsate " + str(self.players[0].getEvalCount()) + " times.")
         print("Player " + str(self.players[1]) + " evaluated a boardsate " + str(self.players[1].getEvalCount()) + " times.")
+
         return self.winner
     
     # Determine if the game is over
     def isOver(self):
         self.winner = self.winning(self.gameBoard.getBoardState(), self.gameN)
         return self.winner != 0
-    
 
     @staticmethod
     def winning (board, gameN):
@@ -64,8 +61,6 @@ class Game:
                             break
                     if (player != 0):
                         return player
-                    
-
         
         # Vertical Check 
         for row in range (len(board) - (gameN-1)):
@@ -78,7 +73,6 @@ class Game:
                             break
                     if (player != 0):
                         return player
-                    
 
         # Ascending Diagonal Check 
         for row in range(len(board)-1, gameN-2, -1):
