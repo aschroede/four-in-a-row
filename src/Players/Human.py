@@ -9,6 +9,7 @@ class HumanPlayer(PlayerController.PlayerController):
         self.playerID = playerID
         self.gameN = gameN
         self.heuristic = heuristic
+        self.history = []
     
     # Show the human player the current board and ask them for the next move       
     def makeMove(self, board):
@@ -19,6 +20,8 @@ class HumanPlayer(PlayerController.PlayerController):
         #not sure what is referred by this in Java
         column = int(input("Player " + str(self) + "\nWhich column would you like to play in? "))
         print(f"Selected Column: {column}")
+
+        self.history.append(column)
         
         return column - 1 
 

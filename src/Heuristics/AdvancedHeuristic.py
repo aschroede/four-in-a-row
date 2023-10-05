@@ -2,6 +2,8 @@ from Heuristics import AHeuristicBase
 from Game import Game
 import sys
 
+#### THIS IS NOT WORKING AND IS NOT USED ####
+
 class AdvancedHeuristic(AHeuristicBase.AHeuristicBase):
     def __init__(self, gameN):
         self.gameN = gameN

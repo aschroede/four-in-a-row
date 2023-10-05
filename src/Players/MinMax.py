@@ -10,20 +10,23 @@ class MinMaxPlayer(PlayerController.PlayerController):
         self.depth = depth
         self.gameN = gameN
         self.heuristic = heuristic
+        self.history = []
         
     def makeMove(self, board): 
 
         maxValue = -sys.maxsize
-        maxMove = 0
+        maxMove = -1
 
         startNode = Node.Node(board)
         self.miniMax(startNode, self.depth, self.playerID)
         
         for child in startNode.children:
-            if child.value > maxValue:
+            if child.value >= maxValue:
                 maxValue = child.value
                 maxMove = child.column           
 
+        # Record move
+        self.history.append(maxMove+1)
         return maxMove
 
     def miniMax(self, node, depth, player):

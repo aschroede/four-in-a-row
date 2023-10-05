@@ -6,6 +6,7 @@ class PlayerController(ABC):
         self.playerID = playerID
         self.gameN = gameN
         self.heuristic = heuristic
+        self.history = []
 
 #amount of times heuristic was used to evaluate boardstate        
     def getEvalCount(self):
@@ -21,3 +22,6 @@ class PlayerController(ABC):
     @abstractmethod
     def makeMove(self, board):
         pass
+
+    def printHistory(self):
+        print("Player "+ str(self) + " made these moves: " + str(self.history))

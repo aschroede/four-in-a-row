@@ -38,6 +38,8 @@ class Game:
             print("Player " + str(self.players[self.winner -1]) + " won!")
         print("Player " + str(self.players[0]) + " evaluated a boardsate " + str(self.players[0].getEvalCount()) + " times.")
         print("Player " + str(self.players[1]) + " evaluated a boardsate " + str(self.players[1].getEvalCount()) + " times.")
+        self.players[0].printHistory()
+        self.players[1].printHistory()
 
         return self.winner
     

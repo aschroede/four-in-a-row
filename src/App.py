@@ -1,4 +1,4 @@
-from Players import HumanPlayer, MinMaxPlayerPruning, MinMaxPlayer
+from Players import Human, MinMax, MinMaxPruning
 from Game import Game
 from Heuristics import SimpleHeuristic, AdvancedHeuristic
 
@@ -37,36 +37,32 @@ class App:
             self.gameN = int(input("How many pieces in a row is a win? "))
 
     def getPlayers(self):
-            
-            heuristic1 = SimpleHeuristic.SimpleHeuristic(self.gameN)
-            heuristic2 = SimpleHeuristic.SimpleHeuristic(self.gameN)
+        
             players = []
 
-            # First player
-            human = HumanPlayer.HumanPlayer(1, self.gameN, heuristic1)
-            players.append(human)
+            player1 = self.getPlayer(1)
+            player2 = self.getPlayer(2)
 
-            # Second player
-            opponent = int(input("Who would you like to play against: Human[1] or Computer[2]? "))
-
-            if(opponent==1):
-                 
-                human = HumanPlayer.HumanPlayer(2, self.gameN, heuristic2)
-                players.append(human)
-
-            elif(opponent==2):
-                 
-                depth = int(input("What depth should the computer go to? "))
-                 
-                alphabeta = input("Should the computer use alpha beta pruning? [yes/no] ")
-                if(alphabeta=="yes"):
-                    computer = MinMaxPlayerPruning.MinMaxPlayerPruning(2, depth, self.gameN, heuristic2)
-                elif(alphabeta=="no"):
-                    computer = MinMaxPlayer.MinMaxPlayer(2, depth, self.gameN, heuristic2)
-
-                players.append(computer)
+            players.append(player1)
+            players.append(player2)
            
             self.players = players
+
+    def getPlayer(self, playerID):
+        heuristic = SimpleHeuristic.SimpleHeuristic(self.gameN)
+
+        playerType = int(input("Select player type: Human(1), MinMax(2), AlphaBeta(3): "))
+
+        if(playerType==1):
+            return Human.HumanPlayer(playerID, self.gameN, heuristic)
+        else:
+            depth = int(input("What depth should the computer go to? "))
+
+            if(playerType==2):
+                return MinMax.MinMaxPlayer(playerID, depth, self.gameN, heuristic)
+            else:
+                return MinMaxPruning.MinMaxPlayerPruning(playerID, depth, self.gameN, heuristic)
+
 
     def start(self):
         self.getBoardSettings()

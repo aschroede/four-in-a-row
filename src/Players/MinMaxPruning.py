@@ -11,11 +11,12 @@ class MinMaxPlayerPruning(PlayerController.PlayerController):
         self.depth = depth
         self.gameN = gameN
         self.heuristic = heuristic
+        self.history = []
     
     def makeMove(self, board): 
 
         maxValue = -sys.maxsize
-        maxMove = 0
+        maxMove = -1
         
         # Create a node from the current board state
         startNode = Node.Node(board)
@@ -26,10 +27,12 @@ class MinMaxPlayerPruning(PlayerController.PlayerController):
         # Go through the children of the current boardstate and select the child
         # with the highest value and return the associated column.
         for child in startNode.children:
-            if child.value > maxValue:
+            if child.value >= maxValue:
                 maxValue = child.value
                 maxMove = child.column           
 
+        # Record move
+        self.history.append(maxMove+1)
         return maxMove
 
 
