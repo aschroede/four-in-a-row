@@ -38,18 +38,28 @@ class App:
 
     def getPlayers(self):
         
-            players = []
+        heuristic1 = None
+        heuristic2 = None
+        heuristicSelection = int(input("Heuristic types: Simple (1), Advanced (2). Choose a nubmer: "))
+        
+        if(heuristicSelection==1):
+            heuristic1 = SimpleHeuristic.SimpleHeuristic(self.gameN)
+            heuristic2 = SimpleHeuristic.SimpleHeuristic(self.gameN)
+        else:
+            heuristic1 = AdvancedHeuristic.AdvancedHeuristic(self.gameN)
+            heuristic2 = AdvancedHeuristic.AdvancedHeuristic(self.gameN)
+        
+        players = []
 
-            player1 = self.getPlayer(1)
-            player2 = self.getPlayer(2)
+        player1 = self.getPlayer(1, heuristic1)
+        player2 = self.getPlayer(2, heuristic2)
 
-            players.append(player1)
-            players.append(player2)
-           
-            self.players = players
+        players.append(player1)
+        players.append(player2)
+        
+        self.players = players
 
-    def getPlayer(self, playerID):
-        heuristic = SimpleHeuristic.SimpleHeuristic(self.gameN)
+    def getPlayer(self, playerID, heuristic):
 
         playerType = int(input("Select player type: Human(1), MinMax(2), AlphaBeta(3): "))
 

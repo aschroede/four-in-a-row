@@ -1,5 +1,6 @@
 from . import PlayerController
 from . import Node
+from Heuristics import SimpleHeuristic
 import sys
 from Game import Game
 
@@ -37,7 +38,11 @@ class MinMaxPlayer(PlayerController.PlayerController):
             if(depth == 0):
                 
                 # Evaluate nodes
-                node.value = self.heuristic.evaluateBoard(player, node.board)
+                # Evaluate nodes
+                if(type(self.heuristic) == SimpleHeuristic.SimpleHeuristic):
+                    node.value = self.heuristic.evaluateBoard(player, node.board)
+                else:
+                    node.value = self.heuristic.getBestAction(player, node.board)
                 return node.value
         
             # 2) Game over
